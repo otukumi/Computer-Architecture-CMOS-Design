@@ -6,3 +6,5 @@ The objectives of this project is design and simulate the operation of the follo
 •	Design 2-input NAND gate using the Electric layout and schematic tools
 •	Design NOR gate using the Electric layout and schematic tools
 
+I used the SPice code for generating  simple input voltage for the gates
+
