@@ -1,0 +1,20 @@
+*** SPICE deck for cell Inverter{lay} from library new
+*** Created on Sat Apr 15, 2023 11:00:17
+*** Last revised on Sat Apr 15, 2023 12:12:09
+*** Written on Sat Apr 15, 2023 12:32:11 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** TOP LEVEL CELL: Inverter{lay}
+Mnmos@0 out in gnd nmos@0_n-trans-well NMOS L=0.6U W=3U AS=18P AD=6.75P PS=28.5U PD=10.5U
+Mpmos@0 out in vdd pmos@0_p-trans-well PMOS L=0.6U W=3U AS=20.25P AD=6.75P PS=29.1U PD=10.5U
+
+* Spice Code nodes in cell cell 'Inverter{lay}'
+vdd vdd 0 DC 5
+vin in 0 DC pwl 10ns 0 20ns 5 50ns 5 60ns 0 
+cload out 0 250fF
+.measure tran tf trig v(out) val=4.5 fall=1 td=8ns targ v(out) val=0.5 fall=1
+.measure tran tr trig v(out) val=0.5 rise=l td=50ns targ v(out) val=4.5 rise=l
+.tran 0 0.1us 
+.include C:\setups\electric\C5_process.txt
+.END

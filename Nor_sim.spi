@@ -1,0 +1,31 @@
+*** SPICE deck for cell Nor_sim{sch} from library NOR
+*** Created on Sat Apr 15, 2023 17:42:21
+*** Last revised on Sat Apr 15, 2023 17:45:06
+*** Written on Sat Apr 15, 2023 18:22:45 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT NOR__Nor FROM CELL NOR:Nor{sch}
+.SUBCKT NOR__Nor A B out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 out B gnd gnd NMOS L=0.6U W=3U
+Mnmos@3 out A gnd gnd NMOS L=0.6U W=3U
+Mpmos@0 net@2 B out vdd PMOS L=0.6U W=3U
+Mpmos@2 vdd A net@2 vdd PMOS L=0.6U W=3U
+.ENDS NOR__Nor
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: NOR:Nor_sim{sch}
+XNor@0 A B out NOR__Nor
+
+* Spice Code nodes in cell cell 'NOR:Nor_sim{sch}'
+vdd vdd 0 DC 5
+va A 0 DC pwl 10n 0 20n 5 50n 5 60n 0 90n 0 100n 5 130n 5 140n 0 170n 0 180n 5 
+vb B 0 DC pwl 10n 0 20n 5 100n 5 110n 0
+.measure tran tf trig v(out) val=4.5 fall=1 td=4ns targ v(out) val=0.5 fall=1
+.measure tran tr trig v(out) val=0.5 rise=l td=4ns targ v(out) val=4.5 rise=l
+.tran 200n
+.include C:\setups\electric\C5_process.txt
+.END

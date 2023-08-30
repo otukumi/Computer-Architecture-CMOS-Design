@@ -1,0 +1,29 @@
+*** SPICE deck for cell Inverter_sim{sch} from library new
+*** Created on Sat Apr 15, 2023 10:52:10
+*** Last revised on Sat Apr 15, 2023 10:54:43
+*** Written on Sat Apr 15, 2023 12:44:10 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT new__inverter FROM CELL inverter{sch}
+.SUBCKT new__inverter in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@2 out in gnd gnd NMOS L=0.6U W=3U
+Mpmos@2 vdd in out vdd PMOS L=0.6U W=3U
+.ENDS new__inverter
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: Inverter_sim{sch}
+Xinverter@0 in out new__inverter
+
+* Spice Code nodes in cell cell 'Inverter_sim{sch}'
+vdd vdd 0 DC 5
+vin in 0 DC pwl 10ns 0 20ns 5 50ns 5 60ns 0 
+cload out 0 250fF
+.measure tran tf trig v(out) val=4.5 fall=1 td=8ns targ v(out) val=0.5 fall=1
+.measure tran tr trig v(out) val=0.5 rise=l td=50ns targ v(out) val=4.5 rise=l
+.tran 0 0.1us 
+.include C:\setups\electric\C5_process.txt
+.END
